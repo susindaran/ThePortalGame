@@ -113,6 +113,5 @@ public class Game
 		g2d.setFont( new Font( "Arial", 1, 25 ) );
 		g2d.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
 		g2d.drawString( "Resume", 365, 278 );
-		System.out.println( mousePosition );
 	}
 }

@@ -29,7 +29,7 @@ public class Maze
 
 	public Maze()
 	{
-		System.out.println( "Initialzing Maze components" );
+		System.out.println( "Initializing Maze components" );
 		initialize();
 		LoadComponents();
 	}

@@ -52,7 +52,6 @@ public class Framework extends Canvas
 	{
 		try
 		{
-			System.out.println(getClass().getPackage().toString());
 			URL thePortalMenuImgUrl = getClass().getClassLoader().getResource( "the_portal_menu.png" );
 			this.thePortalMenuImg = ImageIO.read( thePortalMenuImgUrl );
 			URL candidCoderzUrl = getClass().getClassLoader().getResource( "candid_coderz.jpg" );
@@ -98,8 +97,6 @@ public class Framework extends Canvas
 					break;
 
 				case CHOOSE_LEVEL:
-					System.out.println( "hereeee" );
-
 					break;
 
 				case GAME_CONTENT_LOADING:
@@ -201,7 +198,6 @@ public class Framework extends Canvas
 
 
 			case MAIN_MENU:
-				System.out.println( frameWidth + " " + frameHeight );
 				g2d.drawImage( this.thePortalMenuImg, 0, 0, frameWidth, frameHeight, null );
 
 				composite = AlphaComposite.getInstance( 3, 0.4F );
@@ -214,10 +210,7 @@ public class Framework extends Canvas
 				g2d.drawRect( 380, 425, 145, 25 );
 				g2d.drawString( "Start Game", 400, 410 );
 				g2d.drawString( "Choose Level", 388, 445 );
-
-
 				this.i += 1;
-				System.out.println( mousePosition() );
 				break;
 
 			case OPTIONS:
@@ -236,8 +229,6 @@ public class Framework extends Canvas
 				g2d.drawString( "BACK", 400, 410 );
 				break;
 			case STARTING:
-				System.out.println( "fw = " + frameWidth + "fh =" + frameHeight );
-
 				g2d.setColor( Color.white );
 				textFont = new Font( "Arial", 1, 16 );
 				g2d.setFont( textFont );
@@ -354,7 +345,6 @@ public class Framework extends Canvas
 			if( ( getMousePosition().getX() > 380.0D ) && ( getMousePosition().getY() > 425.0D ) && ( getMousePosition()
 					.getX() < 525.0D ) && ( getMousePosition().getY() < 450.0D ) )
 			{
-				System.out.println( "here" );
 				gameState = GameState.CHOOSE_LEVEL;
 			}
 		}
