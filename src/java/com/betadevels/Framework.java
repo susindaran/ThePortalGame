@@ -129,8 +129,6 @@ public class Framework extends Canvas
 					{
 						frameWidth = getWidth();
 						frameHeight = getHeight();
-
-
 						gameState = GameState.STARTING;
 					}
 					else
@@ -184,7 +182,6 @@ public class Framework extends Canvas
 				this.alpha += 0.01F;
 				break;
 
-
 			case MAIN_MENU:
 				g2d.drawImage( this.thePortalMenuImg, 0, 0, frameWidth, frameHeight, null );
 
@@ -194,8 +191,8 @@ public class Framework extends Canvas
 				Font textFont = new Font( "Arial", 1, 20 );
 				g2d.setFont( textFont );
 				g2d.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
-				g2d.drawRect( 390, 390, 125, 25 );
-				g2d.drawRect( 380, 425, 145, 25 );
+				g2d.drawRect( 390, 390, 145, 25 );
+				g2d.drawRect( 380, 425, 165, 25 );
 				g2d.drawString( "Start Game", 400, 410 );
 				g2d.drawString( "Choose Level", 388, 445 );
 				this.i += 1;
@@ -321,7 +318,7 @@ public class Framework extends Canvas
 		else if( gameState == GameState.MAIN_MENU )
 		{
 			if( ( getMousePosition().getX() > 390.0D ) && ( getMousePosition().getY() > 390.0D ) && ( getMousePosition()
-					.getX() < 510.0D ) && ( getMousePosition().getY() < 415.0D ) )
+					.getX() < 550.0D ) && ( getMousePosition().getY() < 415.0D ) )
 			{
 				newGame();
 			}

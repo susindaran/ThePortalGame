@@ -20,17 +20,12 @@ public class Game
 	{
 		Framework.gameState = Framework.GameState.GAME_CONTENT_LOADING;
 
-		Thread threadForInitGame = new Thread()
+		Thread threadForInitGame = new Thread( () ->
 		{
-			public void run()
-			{
-				Game.this.initialize();
-
-				Game.this.loadContent();
-
-				Framework.gameState = Framework.GameState.PLAYING;
-			}
-		};
+			Game.this.initialize();
+			Game.this.loadContent();
+			Framework.gameState = Framework.GameState.PLAYING;
+		} );
 		threadForInitGame.start();
 	}
 
