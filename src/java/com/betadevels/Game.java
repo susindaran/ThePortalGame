@@ -4,10 +4,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 public class Game
 {
@@ -26,9 +24,9 @@ public class Game
 		{
 			public void run()
 			{
-				Game.this.Initialize();
+				Game.this.initialize();
 
-				Game.this.LoadContent();
+				Game.this.loadContent();
 
 				Framework.gameState = Framework.GameState.PLAYING;
 			}
@@ -36,23 +34,18 @@ public class Game
 		threadForInitGame.start();
 	}
 
-
-	private void Initialize()
+	private void initialize()
 	{
 		this.maze = new Maze();
 		this.key = new Key();
 	}
 
-
-	private void LoadContent()
+	private void loadContent()
 	{
 		try
 		{
-			URL backgroundImgUrl = getClass().getClassLoader().getResource( "background.jpg" );
-			this.backgroundImg = ImageIO.read( backgroundImgUrl );
-
-			URL redBorderImgUrl = getClass().getClassLoader().getResource( "red_border.png" );
-			this.redBorderImg = ImageIO.read( redBorderImgUrl );
+			this.backgroundImg = ImageIO.read( getClass().getClassLoader().getResource( "background.jpg" ) );
+			this.redBorderImg = ImageIO.read( getClass().getClassLoader().getResource( "red_border.png" ) );
 		}
 		catch( IOException ex )
 		{
@@ -61,30 +54,26 @@ public class Game
 	}
 
 
-	public void RestartGame()
+	public void restartGame()
 	{
-		this.maze.ResetMaze();
+		this.maze.resetMaze();
 		this.key.ResetPlayer();
 	}
 
-
-	public void UpdateGame( long gameTime, Point mousePosition )
+	public void updateGame( long gameTime, Point mousePosition )
 	{
 		this.key.Update();
 	}
 
-
-	public void Draw( Graphics2D g2d, Point mousePosition )
+	public void draw( Graphics2D g2d, Point mousePosition )
 	{
-		this.maze.Draw( g2d, mousePosition );
+		this.maze.draw( g2d, mousePosition );
 		this.key.Draw( g2d );
 	}
 
-
-	public void DrawGameOver( Graphics2D g2d, Point mousePosition, long gameTime )
+	public void drawGameOver( Graphics2D g2d, Point mousePosition, long gameTime )
 	{
-		Draw( g2d, mousePosition );
-
+		draw( g2d, mousePosition );
 		g2d.drawString( "Press space or enter to restart.", Framework.frameWidth / 2 - 100,
 				Framework.frameHeight / 3 + 70 );
 
@@ -103,12 +92,10 @@ public class Game
 		}
 	}
 
-	public void DrawOptionMenu( Graphics2D g2d, Point mousePosition )
+	public void drawOptionMenu( Graphics2D g2d, Point mousePosition )
 	{
 		g2d.setBackground( Color.black );
 		g2d.setColor( Color.WHITE );
-
-
 		g2d.setComposite( AlphaComposite.getInstance( 3, 0.2F ) );
 		g2d.setFont( new Font( "Arial", 1, 25 ) );
 		g2d.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON );

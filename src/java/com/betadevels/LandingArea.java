@@ -17,18 +17,18 @@ public class LandingArea
 
 	public LandingArea()
 	{
-		Initialize();
-		LoadContent();
+		initialize();
+		loadContent();
 	}
 
-	private void Initialize()
+	private void initialize()
 	{
 		this.x = ( ( int ) ( Framework.frameWidth * 0.46D ) );
 
 		this.y = ( ( int ) ( Framework.frameHeight * 0.88D ) );
 	}
 
-	private void LoadContent()
+	private void loadContent()
 	{
 		try
 		{
@@ -42,7 +42,7 @@ public class LandingArea
 		}
 	}
 
-	public void Draw( Graphics2D g2d )
+	public void draw( Graphics2D g2d )
 	{
 		g2d.drawImage( this.landingAreaImg, this.x, this.y, null );
 	}

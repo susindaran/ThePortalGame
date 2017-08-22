@@ -25,13 +25,13 @@ public abstract class Canvas extends JPanel implements KeyListener, MouseListene
 		addMouseListener( this );
 	}
 
-	public abstract void Draw( Graphics2D paramGraphics2D );
+	public abstract void draw( Graphics2D paramGraphics2D );
 
 	public void paintComponent( Graphics g )
 	{
 		Graphics2D g2d = ( Graphics2D ) g;
 		super.paintComponent( g2d );
-		Draw( g2d );
+		draw( g2d );
 	}
 
 
@@ -43,19 +43,23 @@ public abstract class Canvas extends JPanel implements KeyListener, MouseListene
 	public void keyPressed( KeyEvent e )
 	{
 		keyboardState[ e.getKeyCode() ] = true;
-		if( ( ( e.getKeyChar() == 'a' ) || ( e.getKeyCode() == 37 ) ) && ( !isWKeySet ) && ( !isSKeySet ) && ( !isDKeySet ) )
+		if( ( ( e.getKeyChar() == 'a' ) || ( e
+				.getKeyCode() == 37 ) ) && ( !isWKeySet ) && ( !isSKeySet ) && ( !isDKeySet ) )
 		{
 			isAKeySet = true;
 		}
-		else if( ( ( e.getKeyChar() == 's' ) || ( e.getKeyCode() == 40 ) ) && ( !isAKeySet ) && ( !isWKeySet ) && ( !isDKeySet ) )
+		else if( ( ( e.getKeyChar() == 's' ) || ( e
+				.getKeyCode() == 40 ) ) && ( !isAKeySet ) && ( !isWKeySet ) && ( !isDKeySet ) )
 		{
 			isSKeySet = true;
 		}
-		else if( ( ( e.getKeyChar() == 'w' ) || ( e.getKeyCode() == 38 ) ) && ( !isAKeySet ) && ( !isSKeySet ) && ( !isDKeySet ) )
+		else if( ( ( e.getKeyChar() == 'w' ) || ( e
+				.getKeyCode() == 38 ) ) && ( !isAKeySet ) && ( !isSKeySet ) && ( !isDKeySet ) )
 		{
 			isWKeySet = true;
 		}
-		else if( ( ( e.getKeyChar() == 'd' ) || ( e.getKeyCode() == 39 ) ) && ( !isAKeySet ) && ( !isWKeySet ) && ( !isSKeySet ) )
+		else if( ( ( e.getKeyChar() == 'd' ) || ( e
+				.getKeyCode() == 39 ) ) && ( !isAKeySet ) && ( !isWKeySet ) && ( !isSKeySet ) )
 		{
 			isDKeySet = true;
 		}
@@ -144,9 +148,15 @@ public abstract class Canvas extends JPanel implements KeyListener, MouseListene
 		setMouseKeyStatus( e, false );
 	}
 
-	public void mouseClicked( MouseEvent e ) {}
+	public void mouseClicked( MouseEvent e )
+	{
+	}
 
-	public void mouseEntered( MouseEvent e ) {}
+	public void mouseEntered( MouseEvent e )
+	{
+	}
 
-	public void mouseExited( MouseEvent e ) {}
+	public void mouseExited( MouseEvent e )
+	{
+	}
 }

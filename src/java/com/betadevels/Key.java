@@ -5,17 +5,15 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 public class Key
 {
 	private BufferedImage keyImg;
-	public int x;
-	public int y;
-	public int i;
+	private int x;
+	private int y;
+	private int i;
 	public static boolean landed;
 	public Rectangle2D rect;
 
@@ -33,10 +31,9 @@ public class Key
 
 	public void load_content()
 	{
-		URL keyImgUrl = getClass().getClassLoader().getResource( "key_player.png" );
 		try
 		{
-			this.keyImg = ImageIO.read( keyImgUrl );
+			this.keyImg = ImageIO.read( getClass().getClassLoader().getResource( "key_player.png" ) );
 		}
 		catch( IOException ex )
 		{
@@ -69,8 +66,6 @@ public class Key
 	public void Draw( Graphics2D g2d )
 	{
 		g2d.setColor( Color.red );
-
-
 		g2d.drawImage( this.keyImg, this.x, this.y, 30, 30, null );
 	}
 
@@ -80,13 +75,13 @@ public class Key
 		if( Canvas.getIsAKeySet() )
 		{
 			this.rect = new Rectangle2D.Double( this.x, this.y, 30.0D, 30.0D );
-			for( this.i = 0; this.i < Maze.rect_array.size(); this.i += 1 )
+			for( this.i = 0; this.i < Maze.rectArray.size(); this.i += 1 )
 			{
-				if( ( ( Rectangle2D ) Maze.rect_array.get( this.i ) ).getY() == this.y )
+				if( ( ( Rectangle2D ) Maze.rectArray.get( this.i ) ).getY() == this.y )
 				{
-					if( this.rect.intersects( ( Rectangle2D ) Maze.rect_array.get( this.i ) ) )
+					if( this.rect.intersects( ( Rectangle2D ) Maze.rectArray.get( this.i ) ) )
 					{
-						this.x = ( ( int ) ( ( ( Rectangle2D ) Maze.rect_array.get( this.i ) ).getX() + 31.0D ) );
+						this.x = ( ( int ) ( ( ( Rectangle2D ) Maze.rectArray.get( this.i ) ).getX() + 31.0D ) );
 						Canvas.setIsAKeySet( false );
 						collide = true;
 					}
@@ -94,20 +89,20 @@ public class Key
 			}
 			if( !collide )
 			{
-				for( this.i = 0; this.i < Maze.finish_array.size(); this.i += 1 )
+				for( this.i = 0; this.i < Maze.finishArray.size(); this.i += 1 )
 				{
-					if( this.rect.intersects( ( Rectangle2D ) Maze.finish_array.get( this.i ) ) )
+					if( this.rect.intersects( ( Rectangle2D ) Maze.finishArray.get( this.i ) ) )
 					{
 						Canvas.setIsAKeySet( false );
 						collide = true;
 						landed = true;
-						this.x = ( ( int ) ( ( Rectangle2D ) Maze.finish_array.get( this.i ) ).getX() );
+						this.x = ( ( int ) ( ( Rectangle2D ) Maze.finishArray.get( this.i ) ).getX() );
 						Framework.gameState = Framework.GameState.GAMEOVER;
 					}
 				}
-				for( this.i = 0; this.i < Maze.border_array.size(); this.i += 1 )
+				for( this.i = 0; this.i < Maze.borderArray.size(); this.i += 1 )
 				{
-					if( this.rect.intersects( ( Rectangle2D ) Maze.border_array.get( this.i ) ) )
+					if( this.rect.intersects( ( Rectangle2D ) Maze.borderArray.get( this.i ) ) )
 					{
 						Canvas.setIsAKeySet( false );
 						collide = true;
@@ -125,14 +120,14 @@ public class Key
 		else if( Canvas.getIsSKeySet() )
 		{
 			this.rect = new Rectangle2D.Double( this.x, this.y, 30.0D, 30.0D );
-			for( this.i = 0; this.i < Maze.rect_array.size(); this.i += 1 )
+			for( this.i = 0; this.i < Maze.rectArray.size(); this.i += 1 )
 			{
-				if( ( ( Rectangle2D ) Maze.rect_array.get( this.i ) ).getX() == this.x )
+				if( ( ( Rectangle2D ) Maze.rectArray.get( this.i ) ).getX() == this.x )
 				{
-					if( this.rect.intersects( ( Rectangle2D ) Maze.rect_array.get( this.i ) ) )
+					if( this.rect.intersects( ( Rectangle2D ) Maze.rectArray.get( this.i ) ) )
 					{
 
-						this.y = ( ( int ) ( ( ( Rectangle2D ) Maze.rect_array.get( this.i ) ).getY() - 31.0D ) );
+						this.y = ( ( int ) ( ( ( Rectangle2D ) Maze.rectArray.get( this.i ) ).getY() - 31.0D ) );
 						Canvas.setIsSKeySet( false );
 						collide = true;
 					}
@@ -141,21 +136,21 @@ public class Key
 
 			if( !collide )
 			{
-				for( this.i = 0; this.i < Maze.finish_array.size(); this.i += 1 )
+				for( this.i = 0; this.i < Maze.finishArray.size(); this.i += 1 )
 				{
-					if( this.rect.intersects( ( Rectangle2D ) Maze.finish_array.get( this.i ) ) )
+					if( this.rect.intersects( ( Rectangle2D ) Maze.finishArray.get( this.i ) ) )
 					{
 						Canvas.setIsSKeySet( false );
 						collide = true;
 						landed = true;
 
-						this.y = ( ( int ) ( ( Rectangle2D ) Maze.finish_array.get( this.i ) ).getY() );
+						this.y = ( ( int ) ( ( Rectangle2D ) Maze.finishArray.get( this.i ) ).getY() );
 						Framework.gameState = Framework.GameState.GAMEOVER;
 					}
 				}
-				for( this.i = 0; this.i < Maze.border_array.size(); this.i += 1 )
+				for( this.i = 0; this.i < Maze.borderArray.size(); this.i += 1 )
 				{
-					if( this.rect.intersects( ( Rectangle2D ) Maze.border_array.get( this.i ) ) )
+					if( this.rect.intersects( ( Rectangle2D ) Maze.borderArray.get( this.i ) ) )
 					{
 						Canvas.setIsSKeySet( false );
 						collide = true;
@@ -172,14 +167,14 @@ public class Key
 		else if( Canvas.getIsDKeySet() )
 		{
 			this.rect = new Rectangle2D.Double( this.x, this.y, 30.0D, 30.0D );
-			for( this.i = 0; this.i < Maze.rect_array.size(); this.i += 1 )
+			for( this.i = 0; this.i < Maze.rectArray.size(); this.i += 1 )
 			{
-				if( ( ( Rectangle2D ) Maze.rect_array.get( this.i ) ).getY() == this.y )
+				if( ( ( Rectangle2D ) Maze.rectArray.get( this.i ) ).getY() == this.y )
 				{
-					if( this.rect.intersects( ( Rectangle2D ) Maze.rect_array.get( this.i ) ) )
+					if( this.rect.intersects( ( Rectangle2D ) Maze.rectArray.get( this.i ) ) )
 					{
 
-						this.x = ( ( int ) ( ( ( Rectangle2D ) Maze.rect_array.get( this.i ) ).getX() - 31.0D ) );
+						this.x = ( ( int ) ( ( ( Rectangle2D ) Maze.rectArray.get( this.i ) ).getX() - 31.0D ) );
 						Canvas.setIsDKeySet( false );
 						collide = true;
 					}
@@ -187,20 +182,20 @@ public class Key
 			}
 			if( !collide )
 			{
-				for( this.i = 0; this.i < Maze.finish_array.size(); this.i += 1 )
+				for( this.i = 0; this.i < Maze.finishArray.size(); this.i += 1 )
 				{
-					if( this.rect.intersects( ( Rectangle2D ) Maze.finish_array.get( this.i ) ) )
+					if( this.rect.intersects( ( Rectangle2D ) Maze.finishArray.get( this.i ) ) )
 					{
 						Canvas.setIsDKeySet( false );
 						collide = true;
 						landed = true;
-						this.x = ( ( int ) ( ( Rectangle2D ) Maze.finish_array.get( this.i ) ).getX() );
+						this.x = ( ( int ) ( ( Rectangle2D ) Maze.finishArray.get( this.i ) ).getX() );
 						Framework.gameState = Framework.GameState.GAMEOVER;
 					}
 				}
-				for( this.i = 0; this.i < Maze.border_array.size(); this.i += 1 )
+				for( this.i = 0; this.i < Maze.borderArray.size(); this.i += 1 )
 				{
-					if( this.rect.intersects( ( Rectangle2D ) Maze.border_array.get( this.i ) ) )
+					if( this.rect.intersects( ( Rectangle2D ) Maze.borderArray.get( this.i ) ) )
 					{
 						Canvas.setIsDKeySet( false );
 						collide = true;
@@ -209,8 +204,6 @@ public class Key
 					}
 				}
 			}
-
-
 			if( !collide )
 			{
 				this.x += 2;
@@ -219,14 +212,14 @@ public class Key
 		else if( Canvas.getIsWKeySet() )
 		{
 			this.rect = new Rectangle2D.Double( this.x, this.y, 30.0D, 30.0D );
-			for( this.i = 0; this.i < Maze.rect_array.size(); this.i += 1 )
+			for( this.i = 0; this.i < Maze.rectArray.size(); this.i += 1 )
 			{
-				if( ( ( Rectangle2D ) Maze.rect_array.get( this.i ) ).getX() == this.x )
+				if( Maze.rectArray.get( this.i ).getX() == this.x )
 				{
-					if( this.rect.intersects( ( Rectangle2D ) Maze.rect_array.get( this.i ) ) )
+					if( this.rect.intersects( Maze.rectArray.get( this.i ) ) )
 					{
 
-						this.y = ( ( int ) ( ( ( Rectangle2D ) Maze.rect_array.get( this.i ) ).getY() + 31.0D ) );
+						this.y = ( ( int ) ( Maze.rectArray.get( this.i ).getY() + 31.0D ) );
 						Canvas.setIsWKeySet( false );
 						collide = true;
 					}
@@ -234,20 +227,20 @@ public class Key
 			}
 			if( !collide )
 			{
-				for( this.i = 0; this.i < Maze.finish_array.size(); this.i += 1 )
+				for( this.i = 0; this.i < Maze.finishArray.size(); this.i += 1 )
 				{
-					if( this.rect.intersects( ( Rectangle2D ) Maze.finish_array.get( this.i ) ) )
+					if( this.rect.intersects( Maze.finishArray.get( this.i ) ) )
 					{
 						Canvas.setIsWKeySet( false );
 						collide = true;
 						landed = true;
-						this.y = ( ( int ) ( ( Rectangle2D ) Maze.finish_array.get( this.i ) ).getY() );
+						this.y = ( ( int ) Maze.finishArray.get( this.i ).getY() );
 						Framework.gameState = Framework.GameState.GAMEOVER;
 					}
 				}
-				for( this.i = 0; this.i < Maze.border_array.size(); this.i += 1 )
+				for( this.i = 0; this.i < Maze.borderArray.size(); this.i += 1 )
 				{
-					if( this.rect.intersects( ( Rectangle2D ) Maze.border_array.get( this.i ) ) )
+					if( this.rect.intersects( Maze.borderArray.get( this.i ) ) )
 					{
 						Canvas.setIsWKeySet( false );
 						collide = true;

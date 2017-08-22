@@ -14,39 +14,39 @@ import javax.imageio.ImageIO;
 public class PlayerRocket
 {
 	private Random random;
-	public int x;
-	public int y;
-	public boolean landed;
-	public boolean crashed;
+	private int x;
+	private int y;
+	private boolean landed;
+	private boolean crashed;
 	private int speedAccelerating;
 	private int speedStopping;
-	public int topLandingSpeed;
+	private int topLandingSpeed;
 	private int speedX;
-	public int speedY;
+	private int speedY;
 	private BufferedImage rocketImg;
 	private BufferedImage rocketLandedImg;
 	private BufferedImage rocketCrashedImg;
 	private BufferedImage rocketFireImg;
-	public int rocketImgWidth;
-	public int rocketImgHeight;
+	private int rocketImgWidth;
+	private int rocketImgHeight;
 
 	public PlayerRocket()
 	{
-		Initialize();
-		LoadContent();
+		initialize();
+		loadContent();
 		this.x = this.random.nextInt( Framework.frameWidth - this.rocketImgWidth );
 	}
 
-	private void Initialize()
+	private void initialize()
 	{
 		this.random = new Random();
-		ResetPlayer();
+		resetPlayer();
 		this.speedAccelerating = 2;
 		this.speedStopping = 1;
 		this.topLandingSpeed = 5;
 	}
 
-	private void LoadContent()
+	private void loadContent()
 	{
 		try
 		{
@@ -70,7 +70,7 @@ public class PlayerRocket
 		}
 	}
 
-	public void ResetPlayer()
+	private void resetPlayer()
 	{
 		this.landed = false;
 		this.crashed = false;
@@ -82,7 +82,7 @@ public class PlayerRocket
 		this.speedY = 0;
 	}
 
-	public void Update()
+	public void update()
 	{
 		if( Canvas.keyboardKeyState( 87 ) )
 		{
@@ -115,12 +115,10 @@ public class PlayerRocket
 		this.y += this.speedY;
 	}
 
-	public void Draw( Graphics2D g2d )
+	public void draw( Graphics2D g2d )
 	{
 		g2d.setColor( Color.white );
 		g2d.drawString( "Rocket coordinates: " + this.x + " : " + this.y, 5, 15 );
-
-
 		if( this.landed )
 		{
 			g2d.drawImage( this.rocketLandedImg, this.x, this.y, null );
@@ -130,11 +128,9 @@ public class PlayerRocket
 		{
 			g2d.drawImage( this.rocketCrashedImg, this.x,
 					this.y + this.rocketImgHeight - this.rocketCrashedImg.getHeight(), null );
-
 		}
 		else
 		{
-
 			if( Canvas.keyboardKeyState( 87 ) )
 			{
 				g2d.drawImage( this.rocketFireImg, this.x + 12, this.y + 66, null );

@@ -6,10 +6,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 public class Framework extends Canvas
 {
@@ -27,7 +25,10 @@ public class Framework extends Canvas
 	public static enum GameState
 	{
 		STARTING, VISUALIZING, GAME_CONTENT_LOADING, MAIN_MENU, OPTIONS, PLAYING, GAMEOVER, DESTROYED, DISPLAY, CHOOSE_LEVEL;
-		GameState() {}
+
+		GameState()
+		{
+		}
 	}
 
 	private Game game;
@@ -37,26 +38,23 @@ public class Framework extends Canvas
 	private BufferedImage thePortalMenuImg;
 	private BufferedImage candidCoderzImg;
 
-
 	public Framework()
 	{
 		gameState = GameState.VISUALIZING;
-		Thread gameThread = new Thread( Framework.this::GameLoop );
+		Thread gameThread = new Thread( Framework.this::gameLoop );
 		gameThread.start();
 	}
 
-	private void Initialize()
-	{}
+	private void initialize()
+	{
+	}
 
-	private void LoadContent()
+	private void loadContent()
 	{
 		try
 		{
-			URL thePortalMenuImgUrl = getClass().getClassLoader().getResource( "the_portal_menu.png" );
-			this.thePortalMenuImg = ImageIO.read( thePortalMenuImgUrl );
-			URL candidCoderzUrl = getClass().getClassLoader().getResource( "candid_coderz.jpg" );
-			this.candidCoderzImg = ImageIO.read( candidCoderzUrl );
-
+			this.thePortalMenuImg = ImageIO.read( getClass().getClassLoader().getResource( "the_portal_menu.png" ) );
+			this.candidCoderzImg = ImageIO.read( getClass().getClassLoader().getResource( "candid_coderz.jpg" ) );
 		}
 		catch( IOException ex )
 		{
@@ -64,26 +62,19 @@ public class Framework extends Canvas
 		}
 	}
 
-
-	private void GameLoop()
+	private void gameLoop()
 	{
 		long visualizingTime = 0L;
 		long lastVisualizingTime = System.nanoTime();
 
-
-		for( ; ; )
+		while( true )
 		{
 			long beginTime = System.nanoTime();
-
-
 			switch( gameState )
 			{
-
 				case PLAYING:
 					this.gameTime += System.nanoTime() - this.lastTime;
-
-					this.game.UpdateGame( this.gameTime, mousePosition() );
-
+					this.game.updateGame( this.gameTime, mousePosition() );
 					this.lastTime = System.nanoTime();
 					break;
 
@@ -103,15 +94,13 @@ public class Framework extends Canvas
 					break;
 
 				case STARTING:
-					Initialize();
-
-					LoadContent();
-
-
+					initialize();
+					loadContent();
 					gameState = GameState.DISPLAY;
 					lastVisualizingTime = System.nanoTime();
 					visualizingTime = 0L;
 					break;
+
 				case DISPLAY:
 					if( visualizingTime > 900000000L )
 					{
@@ -135,7 +124,6 @@ public class Framework extends Canvas
 					}
 					break;
 
-
 				case VISUALIZING:
 					if( ( getWidth() > 1 ) && ( visualizingTime > 1500000000L ) )
 					{
@@ -156,7 +144,6 @@ public class Framework extends Canvas
 
 			repaint();
 
-
 			long timeTaken = System.nanoTime() - beginTime;
 			long timeLeft = ( this.GAME_UPDATE_PERIOD - timeTaken ) / 1000000L;
 
@@ -170,22 +157,23 @@ public class Framework extends Canvas
 			}
 			catch( InterruptedException ex )
 			{
+				Logger.getLogger( getClass().getName() ).log( Level.SEVERE, ex.getMessage() );
 			}
 		}
 	}
 
-
-	public void Draw( Graphics2D g2d )
+	public void draw( Graphics2D g2d )
 	{
 		AlphaComposite composite;
 
 		switch( gameState )
 		{
 			case PLAYING:
-				this.game.Draw( g2d, mousePosition() );
+				this.game.draw( g2d, mousePosition() );
 				break;
+
 			case GAMEOVER:
-				this.game.DrawGameOver( g2d, mousePosition(), this.gameTime );
+				this.game.drawGameOver( g2d, mousePosition(), this.gameTime );
 				break;
 
 			case DISPLAY:
@@ -214,13 +202,12 @@ public class Framework extends Canvas
 				break;
 
 			case OPTIONS:
-				this.game.DrawOptionMenu( g2d, mousePosition() );
+				this.game.drawOptionMenu( g2d, mousePosition() );
 				break;
+
 			case CHOOSE_LEVEL:
 				g2d.setBackground( Color.black );
 				g2d.setColor( Color.WHITE );
-
-
 				g2d.setComposite( AlphaComposite.getInstance( 3, 0.2F ) );
 				g2d.setFont( new Font( "Arial", 1, 25 ) );
 				g2d.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
@@ -228,14 +215,15 @@ public class Framework extends Canvas
 				g2d.drawRect( 390, 388, 100, 25 );
 				g2d.drawString( "BACK", 400, 410 );
 				break;
+
 			case STARTING:
 				g2d.setColor( Color.white );
 				textFont = new Font( "Arial", 1, 16 );
 				g2d.setFont( textFont );
 				g2d.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
 				g2d.drawString( "Loading Contents", 550, 525 );
-
 				break;
+
 			case GAME_CONTENT_LOADING:
 				g2d.setColor( Color.white );
 				g2d.drawString( "GAME is LOADING", frameWidth / 2 - 50, frameHeight / 2 );
@@ -252,7 +240,6 @@ public class Framework extends Canvas
 
 	}
 
-
 	private void newGame()
 	{
 		this.gameTime = 0L;
@@ -261,18 +248,16 @@ public class Framework extends Canvas
 		this.game = new Game();
 	}
 
-
 	private void restartGame()
 	{
 		this.gameTime = 0L;
 		this.lastTime = System.nanoTime();
 
-		this.game.RestartGame();
+		this.game.restartGame();
 
 
 		gameState = GameState.PLAYING;
 	}
-
 
 	private Point mousePosition()
 	{
@@ -288,11 +273,11 @@ public class Framework extends Canvas
 		}
 		catch( Exception e )
 		{
+			Logger.getLogger( getClass().getName() ).log( Level.WARNING, e.getMessage() );
 		}
 
 		return new Point( 0, 0 );
 	}
-
 
 	public void keyReleasedFramework( KeyEvent e )
 	{
@@ -323,7 +308,6 @@ public class Framework extends Canvas
 		}
 
 	}
-
 
 	public void mouseClicked( MouseEvent e )
 	{
